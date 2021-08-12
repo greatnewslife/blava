@@ -1,6 +1,6 @@
 {
   "name": "blava",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "files": [
     "dist"
@@ -12,7 +12,7 @@
       "import": "./dist/blava.esm.js",
       "require": "./dist/blava.umd.js"
     }
-  }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
