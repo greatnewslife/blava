@@ -5,8 +5,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/blava.esm.js",
+  "main": "./dist/blava.umd.js",
   "module": "./dist/blava.esm.js",
+   "exports": {
+    ".": {
+      "import": "./dist/blava.esm.js",
+      "require": "./dist/blava.umd.js"
+    }
+  }
   "scripts": {
     "dev": "vite",
     "build": "vite build",
