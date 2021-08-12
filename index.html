@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blava Dev Page</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+
+        box-sizing: border-box;
+      }
+
+      #container {
+        height: 800px;
+        width: 800px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        overflow: hidden;
+      }
+
+      #container svg {
+        position: absolute;
+        height: 400px;
+        width: 400px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="container">
+        <canvas></canvas>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="396.989"
+          height="347.366"
+          viewBox="0 0 396.989 347.366"
+        >
+          <path
+            id="newspaper"
+            d="M359.772,32H111.653A37.242,37.242,0,0,0,74.436,69.218V329.742a24.812,24.812,0,1,1-49.624,0V94.03A12.406,12.406,0,1,0,0,94.03V329.742a49.68,49.68,0,0,0,49.624,49.624H334.96a62.1,62.1,0,0,0,62.03-62.03V69.218A37.242,37.242,0,0,0,359.772,32Zm12.406,285.336a37.257,37.257,0,0,1-37.218,37.218H92.579a48.873,48.873,0,0,0,6.668-24.812V69.218a12.437,12.437,0,0,1,12.406-12.406H359.772a12.437,12.437,0,0,1,12.406,12.406ZM210.9,242.9H136.465a12.406,12.406,0,1,0,0,24.812H210.9a12.406,12.406,0,1,0,0-24.812Zm124.059,0H260.524a12.406,12.406,0,1,0,0,24.812H334.96a12.406,12.406,0,0,0,0-24.812ZM210.9,292.524H136.465a12.406,12.406,0,0,0,0,24.812H210.9a12.406,12.406,0,1,0,0-24.812Zm124.059,0H260.524a12.406,12.406,0,1,0,0,24.812H334.96a12.406,12.406,0,0,0,0-24.812Zm-12.406-210.9H148.871a24.785,24.785,0,0,0-24.812,24.812v74.435a24.815,24.815,0,0,0,24.812,24.812H322.554a24.815,24.815,0,0,0,24.812-24.812V106.436A24.785,24.785,0,0,0,322.554,81.624Zm0,99.247H148.871V106.436H322.554Z"
+            transform="translate(0 -32)"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <script type="module">
+      import { Blava, Point } from "./main.js";
+
+      let canvas = document.querySelector("canvas");
+
+      new Blava(canvas, {
+        movementSpeed: "medium",
+        style: "blob",
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "blava",
+  "version": "0.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/blava.umd.js",
+  "module": "./dist/blava.es.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.4.4"
+  },
+  "dependencies": {
+    "@georgedoescode/spline": "^1.0.1",
+    "simplex-noise": "^2.4.0"
+  }
+}
