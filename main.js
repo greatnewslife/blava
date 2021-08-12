@@ -1,4 +1,3 @@
-import "./style.css";
 import SimplexNoise from "simplex-noise";
 import { spline } from "@georgedoescode/spline";
 
