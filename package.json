@@ -1,11 +1,11 @@
 {
   "name": "blava",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "files": [
     "dist"
   ],
-  "main": "./main.js",
+  "main": "./dist/blava.esm.js",
   "module": "./dist/blava.esm.js",
   "scripts": {
     "dev": "vite",
