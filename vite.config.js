@@ -1,11 +1,18 @@
-const path = require("path");
+const path = require('path');
 
-module.exports = {
+export default {
+  resolve: {
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src'),
+      },
+    ],
+  },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "./main.js"),
-      name: "Blava",
-      fileName: (format) => `blava.${format}.js`,
+      entry: path.resolve(__dirname, 'src/main.js'),
+      name: 'Blava',
     },
   },
 };
