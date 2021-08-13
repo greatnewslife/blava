@@ -2,11 +2,13 @@ lockfileVersion: 5.3
 
 specifiers:
   '@georgedoescode/spline': ^1.0.1
+  blava: file:blava-1.0.5.tgz
   simplex-noise: ^2.4.0
   vite: ^2.4.4
 
 dependencies:
   '@georgedoescode/spline': 1.0.1
+  blava: file:blava-1.0.4.tgz
   simplex-noise: 2.4.0
 
 devDependencies:
@@ -107,3 +109,12 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  file:blava-1.0.4.tgz:
+    resolution: {integrity: sha512-37hk27tGZgtV+vJ94zggfjRQEHB1gRXkErdKC5PwiODNirG4lTnYlRZ8tIxFz+TNWaLzad5DlI8y+5KluzbCUA==, tarball: file:blava-1.0.4.tgz}
+    name: blava
+    version: 1.0.4
+    dependencies:
+      '@georgedoescode/spline': 1.0.1
+      simplex-noise: 2.4.0
+    dev: false
