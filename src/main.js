@@ -31,6 +31,9 @@ export class Point {
   }
 }
 
+/**
+ * An artful blob generator
+ */
 export class Blava {
   noiseSteps = {
     molasses: 0.000_05,
