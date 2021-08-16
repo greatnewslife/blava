@@ -73,7 +73,7 @@ export class Blava {
   ) {
     //Points can be passed in as objects of {x,y} coordinates fitting within 100×100 grid
 
-    if (!this.points || this.points.length == 0) {
+    if (!points || points.length == 0) {
       this.points =
         style == "wave"
           ? this.createWavePoints(pointCount)
