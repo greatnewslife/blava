@@ -22,13 +22,13 @@ pnpm i blava
 ## Configuration options
 
 | parameter     | default value | options                                                                                              | notes                                                                                               |
-| ------------- | ------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --- |
+| ------------- | ------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | variance      | `{x:5,y:10}`  | Any object with `x` and `y` number parameters                                                        | The extent of movement in each direction                                                            |
-| gradient      | `'auto'       | `'auto'` or an object with `from` and `to` color string parameters The gradient fill of the gradient |                                                                                                     |     |
+| gradient      | `'auto'       | `'auto'` or an object with `from` and `to` color string parameters The gradient fill of the gradient |                                                                                                     |
 | movementSpeed | `'slow'`      | One of `['molasses', 'slow', 'medium', 'fast', 'jelly']` or any number                               | The speed of movement in point animation. Typically any number between 0.000_05 and 0.01 works well |
 | points        | `null`        | `null`, an array of Points, or an array of objects with `x` and `y` number parameters                | The points to build the Blava blob with                                                             |
 | pointCount    | `6`           | Any number                                                                                           | The number of points to build the Blava blob with. Does nothing if `points` parameter is supplied   |
-| style         | `'wave'`      | One of `['wave','blob'`                                                                              | The style of Blava to generate. Does nothing if `points` parameter is supplied                      |
+| style         | `'wave'`      | One of `['wave','blob']`                                                                             | The style of Blava to generate. Does nothing if `points` parameter is supplied                      |
 
 ## Other notes
 
