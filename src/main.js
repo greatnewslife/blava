@@ -2,6 +2,23 @@ import SimplexNoise from "simplex-noise";
 import { spline } from "@georgedoescode/spline";
 
 /**
+ * @typedef BlavaGradient
+ *
+ * An object containing color and position information about a Blava gradient stop
+ *
+ * @param {string|object} from            The beginning stop of the linear gradient
+ * @param {object}        from.position   The coordinate (on a 100x100 grid) of the beginning stop
+ * @param {number}        from.position.x The horizontal position of the beginning stop coordinate
+ * @param {number}        from.position.y The vertical position of the beginning stop coordinate
+ * @param {string}        from.color      The color of the beginning stop
+ * @param {string|object} to              The ending stop of the linear gradient
+ * @param {object}        to.position     The coordinate (on a 100x100 grid) of the ending stop
+ * @param {number}        to.position.x   The horizontal position of the ending stop coordinate
+ * @param {number}        to.position.y   The vertical position of the ending stop coordinate
+ * @param {string}        to.color        The color of the ending stop
+ */
+
+/**
  * A simple point in space
  */
 export class Point {
@@ -48,20 +65,18 @@ export class Blava {
    *
    * @param {HTMLCanvasElement} canvas The canvas element to manipulate
    *
-   * @param {object}            [config]                        Configuration options
-   * @param {number|string}     [config.movementSpeed = "slow"] The speed of animation as a number or one of a set of default
-   *                                                           speeds (molasses, slow, medium, fast, or jelly)
-   * @param {string}            [config.style = "wave"]         A choice of default presentation styles (wave or blob) if a list
-   *                                                           of points is not supplied
-   * @param {object}            [config.variance]               The measurements determining the amount of variance in position
-   * @param {number}            [config.variance.x = 5]         The amount of x variance
-   * @param {number}            [config.variance.y = 10]        The amount of y variance
-   * @param {string|object}     [config.gradient = "auto"]      A description of the linear gradient to use for fill or "auto"
-   * @param {string}            [config.gradient.from]          The beginning stop of the gradient
-   * @param {string}            [config.gradient.to]            The beginning stop of the gradient
-   * @param {Point[]}           [config.points = []]            The ordered list of points to animate
-   * @param {number}            [config.pointCount = 4]         The number of points to generate if the shape is
-   *                                                           automatically generated. Not used if config.points is supplied
+   * @param {object}               [config]                        Configuration options
+   * @param {number|string}        [config.movementSpeed = "slow"] The speed of animation as a number or one of a set of default
+   *                                                              speeds (molasses, slow, medium, fast, or jelly)
+   * @param {string}               [config.style = "wave"]         A choice of default presentation styles (wave or blob) if a list
+   *                                                              of points is not supplied
+   * @param {object}               [config.variance]               The measurements determining the amount of variance in position
+   * @param {number}               [config.variance.x = 5]         The amount of x variance
+   * @param {number}               [config.variance.y = 10]        The amount of y variance
+   * @param {string|BlavaGradient} [config.gradient = "auto"]      A description of the linear gradient to use for fill or "auto"
+   * @param {Point[]}              [config.points = []]            The ordered list of points to animate
+   * @param {number}               [config.pointCount = 4]         The number of points to generate if the shape is
+   *                                                              automatically generated. Not used if config.points is supplied
    */
   constructor(
     canvas,
@@ -109,11 +124,43 @@ export class Blava {
       let hue = Math.random() * 360;
 
       this.gradient = {
-        from: `hsl(${hue},100%,78%`,
-        to: `hsl(${hue},100%,92%`,
+        from: {
+          position: {
+            x: 50,
+            y: 50,
+          },
+          color: `hsl(${hue},100%,78%`,
+        },
+        to: {
+          position: {
+            x: 50,
+            y: 100,
+          },
+          color: `hsl(${hue},100%,92%`,
+        },
       };
     } else {
+      //Convert from and to properties into full gradient descriptions if they're only strings
       this.gradient = gradient;
+
+      if (typeof this.gradient.from == "string") {
+        this.gradient.from = {
+          color: this.gradient.from,
+          position: {
+            x: 50,
+            y: 50,
+          },
+        };
+      }
+      if (typeof this.gradient.to == "string") {
+        this.gradient.to = {
+          color: this.gradient.to,
+          position: {
+            x: 50,
+            y: 100,
+          },
+        };
+      }
     }
 
     window.addEventListener("resize", this.handleResize.bind(this));
@@ -187,10 +234,15 @@ export class Blava {
    * @param {string|object} (optional) Either "auto" or an object with to and from color strings
    */
   applyGradient(input) {
-    let result = this.context.createLinearGradient(50, 50, 50, 100);
+    let result = this.context.createLinearGradient(
+      this.gradient.from.position.x,
+      this.gradient.from.position.y,
+      this.gradient.to.position.x,
+      this.gradient.to.position.y
+    );
 
-    result.addColorStop(0, this.gradient.from);
-    result.addColorStop(1, this.gradient.to);
+    result.addColorStop(0, this.gradient.from.color);
+    result.addColorStop(1, this.gradient.to.color);
 
     this.context.fillStyle = result;
   }
