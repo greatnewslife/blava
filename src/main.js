@@ -77,6 +77,11 @@ export class Blava {
    * @param {Point[]}              [config.points = []]            The ordered list of points to animate
    * @param {number}               [config.pointCount = 4]         The number of points to generate if the shape is
    *                                                              automatically generated. Not used if config.points is supplied
+   *
+   * @param {function}             [config.beforePaint = null]     A function run before every paint frame. The first argument is
+   *                                                              the Blava instance
+   * @param {function}             [config.afterPaint = null]      A function run before every paint frame. The first argument is
+   *                                                              the Blava instance
    */
   constructor(
     canvas,
@@ -87,6 +92,8 @@ export class Blava {
       points = [],
       pointCount = 6,
       style = "wave",
+      beforePaint = null,
+      afterPaint = null,
     } = {}
   ) {
     //Points can be passed in as objects of {x,y} coordinates fitting within 100×100 grid
@@ -110,13 +117,26 @@ export class Blava {
 
     this.canvas = canvas;
     this.context = this.canvas.getContext("2d");
+
+    //An optional callback to run before painting the Blava
+    if (beforePaint) {
+      this.beforePaint = beforePaint;
+    }
+
+    //An optional callback to run after painting the Blava
+    if (afterPaint) {
+      this.afterPaint = afterPaint;
+    }
+
     //The degree to which the position of animated points fluctuate
     this.speed =
       typeof movementSpeed == "number"
         ? movementSpeed
         : this.noiseSteps[movementSpeed] ?? this.noiseSteps["slow"];
+
     //How much a point's position fluctuates
     this.variance = variance;
+
     //Whether the animation of the blob is currently running
     this.playing = true;
 
@@ -251,12 +271,12 @@ export class Blava {
    * Adjust canvas size to cover the entirety of its parent element
    */
   handleResize() {
-    let height = window.innerHeight;
-    let width = window.innerWidth;
     let rect = this.canvas.parentElement.getBoundingClientRect();
+    let width = rect.width;
+    let height = rect.height;
 
-    width = rect.width;
-    height = rect.height;
+    //Clear saved state on the stack
+    this.context.restore();
 
     //Scaling is based on current scale, so original transform must
     //first be restored before scaling again
@@ -265,6 +285,14 @@ export class Blava {
 
     this.context.setTransform(1, 0, 0, 1, 0, 0);
     this.context.scale(width / 100, height / 100);
+
+    this.context.clearRect(0, 0, width, height);
+
+    //Reset clipping path to cover full canvas
+    this.context.clip(new Path2D("M0,0 H100 V100 H0 V0 Z"));
+
+    //Save the context state
+    this.context.save();
   }
 
   /**
@@ -326,12 +354,18 @@ export class Blava {
     });
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.restore();
+    this.context.save();
 
-    let pathString = spline(this.points, 1, true);
-    let p = new Path2D(pathString);
+    this.beforePaint?.(this);
+
+    this.path = spline(this.points, 1, true);
+    let p = new Path2D(this.path);
 
     this.applyGradient();
     this.context.fill(p);
+
+    this.afterPaint?.(this);
 
     requestAnimationFrame(this.animate.bind(this));
   }
