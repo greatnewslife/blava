@@ -16,13 +16,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "devDependencies": {
     "vite": "^2.4.4"
   },
   "dependencies": {
     "@georgedoescode/spline": "^1.0.1",
-    "simplex-noise": "^2.4.0"
+    "simplex-noise": "^2.4.0",
+    "vitepress": "^0.16.1"
   }
 }

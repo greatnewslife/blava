@@ -41,3 +41,10 @@ A Blava is generated on a canvas whose container element is assumed to be a squa
 ### Points
 
 A custom `Point` class is included to track positioning and per-direction animation state of each point in the Blava. The constructor takes an `x` and `y` position as well as an optional configuration object. The configuration object can have an `animated` property with either a boolean to determine whether the Point is animated at all or an object with `x` and `y` properties to set animation state per dimension
+
+### Hooks
+
+The `beforePaint` and `afterPaint` configuration options allow for a function before and after the
+Blava paint operation respectively. Both functions have full access to the Blava instance as the
+first passed argument. Point calculation is completed before running either function, so they can
+be manipulated before or after the paint operation.
