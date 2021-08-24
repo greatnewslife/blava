@@ -1,8 +1,10 @@
-import DefaultTheme from "vitepress/theme";
-import "./custom.css";
+import DefaultTheme from 'vitepress/theme';
+import Blava from '../../components/Blava.vue';
+import './custom.css';
 
 export default {
-  DefaultTheme,
-  NotFound,
-  enhanceApp,
+  ...DefaultTheme,
+  enhanceApp({ app }) {
+    app.component('Blava', Blava);
+  },
 };

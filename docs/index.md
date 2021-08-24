@@ -1,3 +1,5 @@
+<Blava/>
+
 # Blava
 
 Performant artful blob generator using canvas 📋
