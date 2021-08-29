@@ -22,8 +22,8 @@
     "docs:serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "vite": "^2.4.4",
-    "vitepress": "^0.16.1"
+    "vite": "2.5.1",
+    "vitepress": "0.16.1"
   },
   "dependencies": {
     "@georgedoescode/spline": "^1.0.1",
