@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "@georgedoescode/spline": "^1.0.1",
-    "simplex-noise": "^2.4.0"
+    "simplex-noise": "^3.0.0"
   }
 }
