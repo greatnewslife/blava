@@ -1,5 +1,5 @@
-import SimplexNoise from "simplex-noise";
-import { spline } from "@georgedoescode/spline";
+import SimplexNoise from 'simplex-noise';
+import { spline } from '@georgedoescode/spline';
 
 /**
  * @typedef BlavaGradient
@@ -86,12 +86,12 @@ export class Blava {
   constructor(
     canvas,
     {
-      movementSpeed = "slow",
+      movementSpeed = 'slow',
       variance = { x: 5, y: 10 },
-      gradient = "auto",
+      gradient = 'auto',
       points = [],
       pointCount = 6,
-      style = "wave",
+      style = 'wave',
       beforePaint = null,
       afterPaint = null,
     } = {}
@@ -100,7 +100,7 @@ export class Blava {
 
     if (!points || points.length == 0) {
       this.points =
-        style == "wave"
+        style == 'wave'
           ? this.createWavePoints(pointCount)
           : this.createBlobPoints(pointCount);
     } else {
@@ -116,7 +116,7 @@ export class Blava {
     }
 
     this.canvas = canvas;
-    this.context = this.canvas.getContext("2d");
+    this.context = this.canvas.getContext('2d');
 
     //An optional callback to run before painting the Blava
     if (beforePaint) {
@@ -130,9 +130,9 @@ export class Blava {
 
     //The degree to which the position of animated points fluctuate
     this.speed =
-      typeof movementSpeed == "number"
+      typeof movementSpeed == 'number'
         ? movementSpeed
-        : this.noiseSteps[movementSpeed] ?? this.noiseSteps["slow"];
+        : this.noiseSteps[movementSpeed] ?? this.noiseSteps['slow'];
 
     //How much a point's position fluctuates
     this.variance = variance;
@@ -140,7 +140,7 @@ export class Blava {
     //Whether the animation of the blob is currently running
     this.playing = true;
 
-    if (gradient === "auto") {
+    if (gradient === 'auto') {
       let hue = Math.random() * 360;
 
       this.gradient = {
@@ -163,7 +163,7 @@ export class Blava {
       //Convert from and to properties into full gradient descriptions if they're only strings
       this.gradient = gradient;
 
-      if (typeof this.gradient.from == "string") {
+      if (typeof this.gradient.from == 'string') {
         this.gradient.from = {
           color: this.gradient.from,
           position: {
@@ -172,7 +172,7 @@ export class Blava {
           },
         };
       }
-      if (typeof this.gradient.to == "string") {
+      if (typeof this.gradient.to == 'string') {
         this.gradient.to = {
           color: this.gradient.to,
           position: {
@@ -183,10 +183,13 @@ export class Blava {
       }
     }
 
-    window.addEventListener("resize", this.handleResize.bind(this));
+    this.resizeObserver = new ResizeObserver(() => {
+      this.handleResize();
+    });
+
+    this.resizeObserver.observe(this.canvas);
 
     this.applyGradient();
-    this.handleResize();
     this.animate();
   }
 
@@ -271,25 +274,23 @@ export class Blava {
    * Adjust canvas size to cover the entirety of its parent element
    */
   handleResize() {
-    let rect = this.canvas.parentElement.getBoundingClientRect();
-    let width = rect.width;
-    let height = rect.height;
+    let { width, height } = this.canvas.getBoundingClientRect();
 
     //Clear saved state on the stack
     this.context.restore();
 
+    this.canvas.setAttribute('height', height);
+    this.canvas.setAttribute('width', width);
+
     //Scaling is based on current scale, so original transform must
     //first be restored before scaling again
-    this.canvas.setAttribute("height", height);
-    this.canvas.setAttribute("width", width);
-
     this.context.setTransform(1, 0, 0, 1, 0, 0);
     this.context.scale(width / 100, height / 100);
 
     this.context.clearRect(0, 0, width, height);
 
     //Reset clipping path to cover full canvas
-    this.context.clip(new Path2D("M0,0 H100 V100 H0 V0 Z"));
+    this.context.clip(new Path2D('M0,0 H100 V100 H0 V0 Z'));
 
     //Save the context state
     this.context.save();
@@ -318,7 +319,7 @@ export class Blava {
       return;
     }
 
-    this.points.forEach((point, index) => {
+    this.points.forEach((point) => {
       if (!point.animated) {
         return;
       }
@@ -360,10 +361,9 @@ export class Blava {
     this.beforePaint?.(this);
 
     this.path = spline(this.points, 1, true);
-    let p = new Path2D(this.path);
 
     this.applyGradient();
-    this.context.fill(p);
+    this.context.fill(new Path2D(this.path));
 
     this.afterPaint?.(this);
 
