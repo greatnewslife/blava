@@ -22,7 +22,7 @@
     "docs:serve": "vitepress serve docs"
   },
   "devDependencies": {
-    "vite": "2.5.1",
+    "vite": "2.5.2",
     "vitepress": "0.16.1"
   },
   "dependencies": {
