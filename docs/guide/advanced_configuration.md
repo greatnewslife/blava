@@ -15,6 +15,12 @@ new Blava(c, {
     { x: 60, y: 30 },
   ],
 
+  //Allows for reproducible randomness
+  //Used for any configuration and manipulation based on
+  //randomness (including initial positioning, movement,
+  //and gradient hue selection)
+  seed: 'apsv9a8wj938nvas',
+
   gradient: {
     from: {
       //Position is based on a 100×100 grid
@@ -22,14 +28,14 @@ new Blava(c, {
         x: 0,
         y: 50,
       },
-      color: "hsl(20, 100%, 82%)",
+      color: 'hsl(20, 100%, 82%)',
     },
     to: {
       position: {
         x: 100,
         y: 50,
       },
-      color: "hsl(58, 100%, 82%)",
+      color: 'hsl(58, 100%, 82%)',
     },
   },
   //How much on the 100×100 grid animated points will move

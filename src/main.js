@@ -1,5 +1,6 @@
 import SimplexNoise from 'simplex-noise';
 import { spline } from '@georgedoescode/spline';
+import * as Alea from 'alea';
 
 /**
  * @typedef BlavaGradient
@@ -32,8 +33,9 @@ export class Point {
    *                                                 specifying movement choice for each direction
    * @param {boolean}        [config.animated.x]      Whether the Point should move horizontally
    * @param {boolean}        [config.animated.y]      Whether the Point should move vertically
+   * @param {number}         [config.random = null]   The random number to use for offset generation
    */
-  constructor(x, y, { animated = true } = {}) {
+  constructor(x, y, { animated = true, random = null } = {}) {
     this.x = x;
     this.y = y;
     this.origin = {
@@ -41,8 +43,8 @@ export class Point {
       y: y,
     };
     this.noiseOffset = {
-      x: Math.random() * 1_000,
-      y: Math.random() * 1_000,
+      x: (random == null ? Math.random() : random) * 1_000,
+      y: (random == null ? Math.random() : random) * 1_000,
     };
     this.animated = animated;
   }
@@ -59,7 +61,6 @@ export class Blava {
     fast: 0.003,
     jelly: 0.03,
   };
-  simplex = new SimplexNoise();
 
   /**
    *
@@ -77,7 +78,8 @@ export class Blava {
    * @param {Point[]}              [config.points = []]            The ordered list of points to animate
    * @param {number}               [config.pointCount = 4]         The number of points to generate if the shape is
    *                                                              automatically generated. Not used if config.points is supplied
-   *
+   * @param {string}               [config.seed = null]            A seed on which all random generation (such as movement,
+   *                                                              initial positioning, & gradient hue) will be based
    * @param {function}             [config.beforePaint = null]     A function run before every paint frame. The first argument is
    *                                                              the Blava instance
    * @param {function}             [config.afterPaint = null]      A function run before every paint frame. The first argument is
@@ -91,13 +93,25 @@ export class Blava {
       gradient = 'auto',
       points = [],
       pointCount = 6,
+      seed = null,
       style = 'wave',
       beforePaint = null,
       afterPaint = null,
     } = {}
   ) {
-    //Points can be passed in as objects of {x,y} coordinates fitting within 100×100 grid
+    this.canvas = canvas;
+    this.context = this.canvas.getContext('2d');
 
+    //Set the seeded random
+    if (seed == null) {
+      this.getRandom = new Alea();
+    } else {
+      this.getRandom = new Alea(seed);
+    }
+
+    this.simplex = new SimplexNoise(this.getRandom);
+
+    //Points can be passed in as objects of {x,y} coordinates fitting within 100×100 grid
     if (!points || points.length == 0) {
       this.points =
         style == 'wave'
@@ -111,12 +125,10 @@ export class Blava {
 
         return new Point(point.x, point.y, {
           animated: point.animated ?? true,
+          random: this.getRandom(),
         });
       });
     }
-
-    this.canvas = canvas;
-    this.context = this.canvas.getContext('2d');
 
     //An optional callback to run before painting the Blava
     if (beforePaint) {
@@ -141,7 +153,7 @@ export class Blava {
     this.playing = true;
 
     if (gradient === 'auto') {
-      let hue = Math.random() * 360;
+      let hue = this.getRandom() * 360;
 
       this.gradient = {
         from: {
@@ -183,6 +195,7 @@ export class Blava {
       }
     }
 
+    //Handle canvas resizing
     this.resizeObserver = new ResizeObserver(() => {
       this.handleResize();
     });
@@ -204,6 +217,7 @@ export class Blava {
     let result = [
       new Point(0, 50, {
         animated: { x: false, y: true },
+        random: this.getRandom(),
       }),
     ];
     let step = 100 / count;
@@ -215,14 +229,15 @@ export class Blava {
       result.push(
         new Point(step * i, (Math.random() * 50) / 2 + 25, {
           animated: animated,
+          random: this.getRandom(),
         })
       );
     }
 
     result.push(
-      new Point(100, 50, { animated: false }),
-      new Point(100, 100, { animated: false }),
-      new Point(0, 100, { animated: false })
+      new Point(100, 50, { animated: false, random: this.getRandom() }),
+      new Point(100, 100, { animated: false, random: this.getRandom() }),
+      new Point(0, 100, { animated: false, random: this.getRandom() })
     );
 
     return result;
@@ -244,7 +259,11 @@ export class Blava {
       let theta = i * angleStep;
 
       result.push(
-        new Point(50 + Math.cos(theta) * radius, 50 + Math.sin(theta) * radius)
+        new Point(
+          50 + Math.cos(theta) * radius,
+          50 + Math.sin(theta) * radius,
+          { random: this.getRandom() }
+        )
       );
     }
 

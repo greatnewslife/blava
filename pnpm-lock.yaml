@@ -2,12 +2,14 @@ lockfileVersion: 5.3
 
 specifiers:
   '@georgedoescode/spline': ^1.0.1
+  alea: ^1.0.0
   simplex-noise: ^3.0.0
   vite: 2.5.1
   vitepress: 0.16.1
 
 dependencies:
   '@georgedoescode/spline': 1.0.1
+  alea: 1.0.0
   simplex-noise: 3.0.0
 
 devDependencies:
@@ -314,6 +316,10 @@ packages:
       mime-types: 2.1.32
       negotiator: 0.6.2
     dev: true
+
+  /alea/1.0.0:
+    resolution: {integrity: sha512-LSvpz/wLJWC6P19Eogz0IgysHgb46DKhHx4VfNWSCQua3usAYDpmrYxqqlqdy4Ozhd2ras2Km+zc26yBB36EaA==}
+    dev: false
 
   /algoliasearch/4.10.3:
     resolution: {integrity: sha512-OLY0AWlPKGLbSaw14ivMB7BT5fPdp8VdzY4L8FtzZnqmLKsyes24cltGlf7/X96ACkYEcT390SReCDt/9SUIRg==}
