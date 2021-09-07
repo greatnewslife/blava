@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "vite": "2.5.2",
-    "vitepress": "0.16.1"
+    "vitepress": "0.17.0"
   },
   "dependencies": {
     "@georgedoescode/spline": "^1.0.1",
