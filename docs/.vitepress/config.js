@@ -2,6 +2,26 @@ module.exports = {
   title: '📋 Blava Docs',
   description: 'Documentation & samples for the Blava JS library',
   lang: 'en-US',
+  head: [
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '64x64',
+        href: 'assets/favicon-64.png',
+      },
+    ],
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: 'assets/favicon-32.png',
+      },
+    ],
+  ],
   themeConfig: {
     docsDir: '/docs/',
     nav: [

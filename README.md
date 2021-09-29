@@ -1,3 +1,7 @@
+<p style="text-align: center">
+<img style="max-height: 150px;" src="assets/blava-logo.png" alt="The Blava logo" />
+</p>
+
 # Blava
 
 Performant artful blob generator using canvas 📋
