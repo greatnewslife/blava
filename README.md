@@ -1,5 +1,5 @@
 <p style="text-align: center">
-<img style="max-height: 150px;" src="assets/blava-logo.png" alt="The Blava logo" />
+<img style="max-height: 150px;" src="docs/public/assets/blava-logo.png" alt="The Blava logo" />
 </p>
 
 # Blava

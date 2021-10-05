@@ -9,7 +9,7 @@ module.exports = {
         rel: 'icon',
         type: 'image/png',
         sizes: '64x64',
-        href: 'assets/favicon-64.png',
+        href: 'favicon-64.png',
       },
     ],
     [
@@ -18,7 +18,7 @@ module.exports = {
         rel: 'icon',
         type: 'image/png',
         sizes: '32x32',
-        href: 'assets/favicon-32.png',
+        href: 'favicon-32.png',
       },
     ],
   ],
