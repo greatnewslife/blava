@@ -33,7 +33,7 @@ export class Point {
    *                                                 specifying movement choice for each direction
    * @param {boolean}        [config.animated.x]      Whether the Point should move horizontally
    * @param {boolean}        [config.animated.y]      Whether the Point should move vertically
-   * @param {number}         [config.random = null]   The random number to use for offset generation
+   * @param {string}         [config.random = null]   The seed to use for patterned randomness
    */
   constructor(x, y, { animated = true, random = null } = {}) {
     this.x = x;
