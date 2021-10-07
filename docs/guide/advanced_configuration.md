@@ -25,7 +25,7 @@ new Blava(c, {
    * randomness (including initial positioning, movement,
    * and gradient hue selection)
    */
-  random: 'apsv9a8wj938nvas',
+  seed: 'apsv9a8wj938nvas',
 
   gradient: {
     from: {
