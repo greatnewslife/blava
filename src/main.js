@@ -1,6 +1,6 @@
 import SimplexNoise from 'simplex-noise';
 import { spline } from '@georgedoescode/spline';
-import * as Alea from 'alea';
+import { prng_alea as Alea } from 'esm-seedrandom';
 
 /**
  * @typedef BlavaGradient

@@ -2,14 +2,14 @@ lockfileVersion: 5.3
 
 specifiers:
   '@georgedoescode/spline': ^1.0.1
-  alea: ^1.0.0
+  esm-seedrandom: ^3.0.5
   simplex-noise: ^3.0.0
   vite: 2.5.2
   vitepress: 0.17.0
 
 dependencies:
   '@georgedoescode/spline': 1.0.1
-  alea: 1.0.0
+  esm-seedrandom: 3.0.5
   simplex-noise: 3.0.0
 
 devDependencies:
@@ -317,10 +317,6 @@ packages:
       negotiator: 0.6.2
     dev: true
 
-  /alea/1.0.0:
-    resolution: {integrity: sha512-LSvpz/wLJWC6P19Eogz0IgysHgb46DKhHx4VfNWSCQua3usAYDpmrYxqqlqdy4Ozhd2ras2Km+zc26yBB36EaA==}
-    dev: false
-
   /algoliasearch/4.10.3:
     resolution: {integrity: sha512-OLY0AWlPKGLbSaw14ivMB7BT5fPdp8VdzY4L8FtzZnqmLKsyes24cltGlf7/X96ACkYEcT390SReCDt/9SUIRg==}
     dependencies:
@@ -536,6 +532,10 @@ packages:
   /escape-html/1.0.3:
     resolution: {integrity: sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=}
     dev: true
+
+  /esm-seedrandom/3.0.5:
+    resolution: {integrity: sha512-pMAq0mFIr5JQ3Ihbng7EBLMJ+llMbaDKkiG44pqbSXS0NIZWtEANpOpxb5s6Q8Q2R562P26qMHPv8YtP/NHh9g==}
+    dev: false
 
   /esprima/4.0.1:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}

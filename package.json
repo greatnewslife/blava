@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@georgedoescode/spline": "^1.0.1",
-    "alea": "^1.0.0",
+    "esm-seedrandom": "^3.0.5",
     "simplex-noise": "^3.0.0"
   }
 }
