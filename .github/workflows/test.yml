@@ -1,8 +1,24 @@
-on: push
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+        os: [ubuntu-latest]
+      fail-fast: false
+
     steps:
       - uses: actions/checkout@v2
 
@@ -20,7 +36,3 @@ jobs:
 
       - name: Build
         run: pnpm build -w
-
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
