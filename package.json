@@ -18,7 +18,7 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm -r --parallel --filter !docs run dev",
     "build": "pnpm -r --parallel --filter !docs run build",
-    "publish": "esmo scripts/publish.ts",
+    "publish:ci": "esmo scripts/publish.ts",
     "release": "esmo scripts/release.ts && git push --follow-tags"
   },
   "repository": {
