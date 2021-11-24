@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Blava } from '../../src/main.js';
+import { Blava } from 'blava';
 export default {
   props: {
     settings: {

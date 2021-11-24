@@ -1,6 +1,14 @@
 import SimplexNoise from 'simplex-noise';
+import Alea from 'esm-seedrandom/esm/alea.mjs';
 import { spline } from '@georgedoescode/spline';
-import { prng_alea as Alea } from 'esm-seedrandom';
+import {
+  PointOptions,
+  Coordinates,
+  BlavaOptions,
+  Gradient,
+  MovementSpeed,
+  AnimateAxes,
+} from './types';
 
 /**
  * @typedef BlavaGradient
@@ -23,6 +31,12 @@ import { prng_alea as Alea } from 'esm-seedrandom';
  * A simple point in space
  */
 export class Point {
+  x: number;
+  y: number;
+  origin: Coordinates;
+  noiseOffset: Coordinates;
+  animated: AnimateAxes;
+
   /**
    * Construct a Point for Blava use
    *
@@ -33,9 +47,13 @@ export class Point {
    *                                                 specifying movement choice for each direction
    * @param {boolean}        [config.animated.x]      Whether the Point should move horizontally
    * @param {boolean}        [config.animated.y]      Whether the Point should move vertically
-   * @param {string}         [config.random = null]   The seed to use for patterned randomness
+   * @param {number|null}         [config.random = null]   The seed to use for patterned randomness
    */
-  constructor(x, y, { animated = true, random = null } = {}) {
+  constructor(
+    x: number,
+    y: number,
+    { animated = true, random = null }: PointOptions = {}
+  ) {
     this.x = x;
     this.y = y;
     this.origin = {
@@ -43,8 +61,8 @@ export class Point {
       y: y,
     };
     this.noiseOffset = {
-      x: (random == null ? Math.random() : random) * 1_000,
-      y: (random == null ? Math.random() : random) * 1_000,
+      x: (random ?? Math.random()) * 1_000,
+      y: (random ?? Math.random()) * 1_000,
     };
     this.animated = animated;
   }
@@ -61,6 +79,19 @@ export class Blava {
     fast: 0.003,
     jelly: 0.03,
   };
+  canvas: HTMLCanvasElement;
+  context: any;
+  getRandom: any;
+  simplex: SimplexNoise;
+  points: Point[];
+  beforePaint?: CallableFunction;
+  afterPaint?: CallableFunction;
+  speed: MovementSpeed;
+  variance: Coordinates;
+  playing: boolean;
+  gradient: Gradient;
+  resizeObserver: ResizeObserver;
+  path: any;
 
   /**
    *
@@ -86,26 +117,28 @@ export class Blava {
    *                                                              the Blava instance
    */
   constructor(
-    canvas,
+    canvas: HTMLCanvasElement,
     {
       movementSpeed = 'slow',
       variance = { x: 5, y: 10 },
       gradient = 'auto',
       points = [],
       pointCount = 6,
-      seed = null,
+      seed = undefined,
       style = 'wave',
-      beforePaint = null,
-      afterPaint = null,
-    } = {}
+      beforePaint = undefined,
+      afterPaint = undefined,
+    }: BlavaOptions = {}
   ) {
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
 
     //Set the seeded random
-    if (seed == null) {
+    if (!seed) {
+      // @ts-ignore
       this.getRandom = new Alea();
     } else {
+      // @ts-ignore
       this.getRandom = new Alea(seed);
     }
 
@@ -119,7 +152,7 @@ export class Blava {
           : this.createBlobPoints(pointCount);
     } else {
       this.points = points.map((point) => {
-        if (point instanceof Point) {
+        if ((point as any) instanceof Point) {
           return point;
         }
 
@@ -213,7 +246,7 @@ export class Blava {
    *
    * @return {Point[]} The generated Points
    */
-  createWavePoints(count) {
+  createWavePoints(count: number) {
     let result = [
       new Point(0, 50, {
         animated: { x: false, y: true },
@@ -250,7 +283,7 @@ export class Blava {
    *
    * @return {Point[]} The generated Points
    */
-  createBlobPoints(count) {
+  createBlobPoints(count: number) {
     let result = [];
     let angleStep = (Math.PI * 2) / count;
     let radius = 25;
@@ -272,20 +305,27 @@ export class Blava {
 
   /**
    * Generate simple linear gradient to use as blob fill
-   *
-   * @param {string|object} (optional) Either "auto" or an object with to and from color strings
    */
-  applyGradient(input) {
-    let result = this.context.createLinearGradient(
-      this.gradient.from.position.x,
-      this.gradient.from.position.y,
-      this.gradient.to.position.x,
-      this.gradient.to.position.y
-    );
+  applyGradient() {
+    let result;
 
-    result.addColorStop(0, this.gradient.from.color);
-    result.addColorStop(1, this.gradient.to.color);
+    if (
+      typeof this.gradient !== 'string' &&
+      typeof this.gradient.from !== 'string' &&
+      typeof this.gradient.to !== 'string'
+    ) {
+      result = this.context.createLinearGradient(
+        this.gradient.from.position.x,
+        this.gradient.from.position.y,
+        this.gradient.to.position.x,
+        this.gradient.to.position.y
+      );
 
+      result.addColorStop(0, this.gradient.from.color);
+      result.addColorStop(1, this.gradient.to.color);
+    } else {
+      result = this.gradient;
+    }
     this.context.fillStyle = result;
   }
 
@@ -298,8 +338,8 @@ export class Blava {
     //Clear saved state on the stack
     this.context.restore();
 
-    this.canvas.setAttribute('height', height);
-    this.canvas.setAttribute('width', width);
+    this.canvas.setAttribute('height', String(height));
+    this.canvas.setAttribute('width', String(width));
 
     //Scaling is based on current scale, so original transform must
     //first be restored before scaling again
@@ -326,7 +366,7 @@ export class Blava {
    *
    * @returns {number} The scaled number
    */
-  scale(n, xMin, xMax, yMin, yMax) {
+  scale(n: number, xMin: number, xMax: number, yMin: number, yMax: number) {
     return ((n - xMin) / (xMax - xMin)) * (yMax - yMin) + yMin;
   }
 
@@ -362,12 +402,18 @@ export class Blava {
         point.origin.y + this.variance.y
       );
 
-      if (point.animated == true || point.animated.x) {
+      if (
+        (point.animated == true || point.animated.x) &&
+        typeof this.speed === 'number'
+      ) {
         point.x = x;
         point.noiseOffset.x += this.speed;
       }
 
-      if (point.animated == true || point.animated.y) {
+      if (
+        (point.animated == true || point.animated.y) &&
+        typeof this.speed === 'number'
+      ) {
         point.y = y;
         point.noiseOffset.y += this.speed;
       }

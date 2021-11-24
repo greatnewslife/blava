@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ES2017",
+    "lib": ["esnext", "dom"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "paths": {
+      "blava": ["./packages/blava/src/index.ts"],
+      "@blava/docs": ["./packages/docs/src/index.md"],
+      "@blava/playground": ["./packages/docs/src/index.md"]
+    }
+  },
+  "exclude": ["**/dist/**", "**/node_modules/**"]
+}
