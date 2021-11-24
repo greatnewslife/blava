@@ -34,5 +34,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
           cache: 'pnpm'
 
+      - name: Install
+        run: pnpm i -w
+
       - name: Build
         run: pnpm build -w
