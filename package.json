@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.10",
-    "esno": "^0.12.1",
+    "esno": "^4.0.0",
     "kleur": "^4.1.4",
     "prettier": "2.4.1",
     "tsup": "^5.7.2",
