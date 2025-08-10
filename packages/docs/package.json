@@ -12,7 +12,7 @@
     "serve": "vitepress serve"
   },
   "devDependencies": {
-    "vitepress": "0.20.1"
+    "vitepress": "0.22.4"
   },
   "dependencies": {
     "blava": "workspace:*"
