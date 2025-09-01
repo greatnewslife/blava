@@ -53,3 +53,6 @@ The `beforePaint` and `afterPaint` configuration options allow for a function be
 Blava paint operation respectively. Both functions have full access to the Blava instance as the
 first passed argument. Point calculation is completed before running either function, so they can
 be manipulated before or after the paint operation.
+
+
+<!-- Security scan triggered at 2025-09-02 01:41:31 -->
