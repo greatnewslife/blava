@@ -21,10 +21,22 @@ export default defineConfig({
 		},
 
 		sidebar: [
-			{ text: 'Getting Started', link: '/guide/getting-started' },
-			{ text: 'Advanced Configuration', link: '/guide/advanced-configuration' },
-			{ text: 'Tips', link: '/guide/tips' },
-			{ text: 'About & Contributing', link: '/about' },
+			{
+				text: 'Guide',
+				items: [
+					{ text: 'Getting Started', link: '/guide/getting-started' },
+					{ text: 'Advanced Configuration', link: '/guide/advanced-configuration' },
+					{ text: 'Tips', link: '/guide/tips' },
+				],
+			},
+
+			{
+				items: [{ text: 'About & Contributing', link: '/about' }],
+			},
+
+			{
+				items: [{ text: 'Experiments', link: 'https://blava-experiments.grayvold.me' }],
+			},
 		],
 
 		socialLinks: [{ icon: 'github', link: 'https://github.com/greatnewslife/blava' }],

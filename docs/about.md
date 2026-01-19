@@ -1,4 +1,4 @@
-# About us
+# About Us
 
 <img class="py-8 w-80" src="https://cdn.greatnews.life/wp-content/uploads/2025/05/gnl-logo-2019-gray-curves.svg" />
 

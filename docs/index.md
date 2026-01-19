@@ -2,6 +2,8 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
+title: Blava | Performant, artful blob generator
+
 hero:
     name: 'Blava'
     text: 'Performant, artful blob generator 🎨'
