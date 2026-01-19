@@ -18,7 +18,7 @@ pnpm i blava
 
 1. Import with
 
-   `import { Blava, Point } from 'blava';`
+`import { Blava, Point } from 'blava';`
 
 2. Place a blank canvas element into a parent container. The canvas will be resized to cover the parent element, which is assumed to be square in aspect ratio
 3. Initialize the Blava object with `new Blava(canvas)` where `canvas` is a reference to the canvas element. An additional configuration object can also be included. Animation automatically begins. To toggle the animation, call `Blava.pause` and `Blava.play`
