@@ -60,8 +60,8 @@ export class Blava {
 	path: string;
 	resizeObserver: ResizeObserver;
 
-	#currentAnimationFrameId: number | null;
-	#simplex: NoiseFunction2D;
+	private currentAnimationFrameId: number | null;
+	private simplex: NoiseFunction2D;
 
 	constructor(canvas: HTMLCanvasElement, options?: BlavaOptions) {
 		const {
@@ -86,12 +86,12 @@ export class Blava {
 
 		this.context = context;
 		this.path = '';
-		this.#currentAnimationFrameId = null;
+		this.currentAnimationFrameId = null;
 
 		// Set the seeded random
 		this.getRandom = prng_alea(seed?.toString());
 
-		this.#simplex = createNoise2D(this.getRandom);
+		this.simplex = createNoise2D(this.getRandom);
 
 		// Points can be passed in as objects of {x, y} coordinates fitting within 100×100 grid
 		if (!points || points.length === 0) {
@@ -351,8 +351,8 @@ export class Blava {
 		// Save the context state
 		this.context.save();
 
-		if (this.#currentAnimationFrameId) {
-			cancelAnimationFrame(this.#currentAnimationFrameId);
+		if (this.currentAnimationFrameId) {
+			cancelAnimationFrame(this.currentAnimationFrameId);
 		}
 
 		this.animate({ singleFrame: !this.playing });
@@ -369,7 +369,7 @@ export class Blava {
 	 *
 	 * @returns The scaled number
 	 */
-	#scale(n: number, xMin: number, xMax: number, yMin: number, yMax: number) {
+	private scale(n: number, xMin: number, xMax: number, yMin: number, yMax: number) {
 		return ((n - xMin) / (xMax - xMin)) * (yMax - yMin) + yMin;
 	}
 
@@ -389,17 +389,17 @@ export class Blava {
 			}
 
 			const noisePoint = {
-				x: this.#simplex(point.noiseOffset.x, point.noiseOffset.x),
-				y: this.#simplex(point.noiseOffset.y, point.noiseOffset.y),
+				x: this.simplex(point.noiseOffset.x, point.noiseOffset.x),
+				y: this.simplex(point.noiseOffset.y, point.noiseOffset.y),
 			};
-			const x = this.#scale(
+			const x = this.scale(
 				noisePoint.x,
 				-1,
 				1,
 				point.origin.x - this.variance.x,
 				point.origin.x + this.variance.x,
 			);
-			const y = this.#scale(
+			const y = this.scale(
 				noisePoint.y,
 				-1,
 				1,
@@ -431,7 +431,7 @@ export class Blava {
 
 		this.afterPaint?.(this);
 
-		this.#currentAnimationFrameId = singleFrame
+		this.currentAnimationFrameId = singleFrame
 			? null
 			: requestAnimationFrame(() => this.animate());
 	}
@@ -458,8 +458,8 @@ export class Blava {
 
 		this.playing = false;
 
-		if (this.#currentAnimationFrameId) {
-			cancelAnimationFrame(this.#currentAnimationFrameId);
+		if (this.currentAnimationFrameId) {
+			cancelAnimationFrame(this.currentAnimationFrameId);
 		}
 	}
 }
