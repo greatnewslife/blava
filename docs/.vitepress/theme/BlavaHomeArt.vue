@@ -43,7 +43,7 @@ onMounted(() => {
 				...standardOptions,
 				gradient: colors[x],
 				seed: seeds[x],
-			})
+			}),
 		);
 	}
 

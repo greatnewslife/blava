@@ -2,10 +2,10 @@ import { globalIgnores } from 'eslint/config';
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
 import pluginVue from 'eslint-plugin-vue';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
-import unocss from '@unocss/eslint-config/flat'
+import unocss from '@unocss/eslint-config/flat';
 
 export default defineConfigWithVueTs(
-    unocss,
+	unocss,
 
 	{
 		name: 'app/files-to-lint',

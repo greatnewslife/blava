@@ -111,7 +111,7 @@ export class Blava {
 					{
 						animated: point.animated,
 						random: this.getRandom(),
-					}
+					},
 				);
 			});
 		}
@@ -130,7 +130,7 @@ export class Blava {
 		this.speed =
 			typeof movementSpeed === 'number'
 				? movementSpeed
-				: noiseSteps[movementSpeed] ?? noiseSteps.slow;
+				: (noiseSteps[movementSpeed] ?? noiseSteps.slow);
 
 		// How much a point's position fluctuates
 		this.variance = variance;
@@ -188,7 +188,7 @@ export class Blava {
 										x: 50,
 										y: 50,
 									},
-							  }
+								}
 							: gradient.from,
 
 					to:
@@ -199,7 +199,7 @@ export class Blava {
 										x: 50,
 										y: 100,
 									},
-							  }
+								}
 							: gradient.to,
 				};
 			}
@@ -242,14 +242,14 @@ export class Blava {
 				new Point(step * i, (this.getRandom() * 50) / 2 + 25, {
 					animated: animated,
 					random: this.getRandom(),
-				})
+				}),
 			);
 		}
 
 		result.push(
 			new Point(100, 50, { animated: false, random: this.getRandom() }),
 			new Point(100, 100, { animated: false, random: this.getRandom() }),
-			new Point(0, 100, { animated: false, random: this.getRandom() })
+			new Point(0, 100, { animated: false, random: this.getRandom() }),
 		);
 
 		return result;
@@ -273,7 +273,7 @@ export class Blava {
 			result.push(
 				new Point(50 + Math.cos(theta) * radius, 50 + Math.sin(theta) * radius, {
 					random: this.getRandom(),
-				})
+				}),
 			);
 		}
 
@@ -297,7 +297,7 @@ export class Blava {
 							y: 0,
 						},
 						color: this.gradient.from,
-				  }
+					}
 				: this.gradient.from;
 
 		const to =
@@ -308,14 +308,14 @@ export class Blava {
 							y: 0,
 						},
 						color: this.gradient.to,
-				  }
+					}
 				: this.gradient.to;
 
 		const result = this.context.createLinearGradient(
 			from.position?.x ?? 0,
 			from.position?.y ?? 0,
 			to.position?.x ?? 100,
-			to.position?.y ?? 100
+			to.position?.y ?? 100,
 		);
 
 		result.addColorStop(0, from.color);
@@ -397,14 +397,14 @@ export class Blava {
 				-1,
 				1,
 				point.origin.x - this.variance.x,
-				point.origin.x + this.variance.x
+				point.origin.x + this.variance.x,
 			);
 			const y = this.#scale(
 				noisePoint.y,
 				-1,
 				1,
 				point.origin.y - this.variance.y,
-				point.origin.y + this.variance.y
+				point.origin.y + this.variance.y,
 			);
 
 			if ((point.animated === true || point.animated.x) && typeof this.speed === 'number') {
